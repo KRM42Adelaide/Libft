@@ -6,13 +6,13 @@
 #    By: kmachaka <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 14:15:16 by kmachaka          #+#    #+#              #
-#    Updated: 2022/07/15 11:00:22 by kmachaka         ###   ########.fr        #
+#    Updated: 2022/07/18 14:51:59 by kmachaka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 CFILES = ft_isalnum.c \
 		 ft_isalpha.c \
 		 ft_isascii.c \
@@ -46,24 +46,38 @@ CFILES = ft_isalnum.c \
 		 ft_putchar_fd.c \
 		 ft_putstr_fd.c \
 		 ft_putendl_fd.c \
-		 ft_putnbr_fd.c 
+		 ft_putnbr_fd.c
+
+#bonus files
+CBFILES = ft_lstnew.c \
+		  ft_lstadd_front.c \
+		  ft_lstsize.c \
+		  ft_lstlast.c \
+		  ft_lstadd_back.c \
+		  ft_lstdelone.c \
+		  ft_lstclear.c \
+		  ft_lstiter.c \
+		  ft_lstmap.c
 
 OFILES = $(CFILES:.c=.o)
 
+OBFILES = $(CBFILES:.c=.o)
+
 all: $(NAME)
+
+bonus: $(NAME)
+		${CC} ${CFLAGS} -c $(CBFILES)
+		ar rcs $^ $(OBFILES)
 
 $(NAME): $(OFILES)
 		ar rcs $@ $^
 
-%.o : %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
-
 clean:
-	-rm -f $(OFILES)
+		-rm -f $(OFILES)
 
 fclean: clean
-	-rm -f $(NAME)
+		-rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean bonus re
